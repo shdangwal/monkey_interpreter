@@ -15,9 +15,10 @@ func TestLetStatements(t *testing.T) {
 		expectedValue      interface{}
 	}{
 		{"let x = 5;", "x", 5},
-		{"let y = true", "y", true},
-		{"let foobar = y", "foobar", "y"},
+		{"let y = true;", "y", true},
+		{"let foobar = y;", "foobar", "y"},
 	}
+
 	for _, tt := range tests {
 		l := lexer.New(tt.input)
 		p := New(l)
@@ -59,7 +60,7 @@ func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 	}
 
 	if letStmt.Name.TokenLiteral() != name {
-		t.Errorf("s.Name no t '%s'. got=%s", name, letStmt.Name)
+		t.Errorf("s.Name not '%s'. got=%s", name, letStmt.Name)
 		return false
 	}
 
@@ -715,4 +716,23 @@ func testBooleanLiteral(t *testing.T, exp ast.Expression, value bool) bool {
 	}
 
 	return true
+}
+
+func TestStringLiteralExpression(t *testing.T) {
+	input := `"hello world";`
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	stmt := program.Statements[0].(*ast.ExpressionStatement)
+	literal, ok := stmt.Expression.(*ast.StringLiteral)
+	if !ok {
+		t.Fatalf("exp not *ast.StringLiteral. got=%T", stmt.Expression)
+	}
+
+	if literal.Value != "hello world" {
+		t.Errorf("literal.Value not %q. got=%q", "hello world", literal.Value)
+	}
 }
