@@ -40,6 +40,7 @@ const (
 	IF       = "IF"
 	ELSE     = "ELSE"
 	RETURN   = "RETURN"
+	STRING   = "STRING"
 
 	LT     = "<"
 	GT     = ">"
