@@ -531,18 +531,18 @@ func TestArrayIndexExpressions(t *testing.T) {
 func TestHashLiterals(t *testing.T) {
 	input := `let two = "two";
   {
-  "onee": 10 - 9,
-  two: 1 + 1,
-  "thr" + "eel": 6 /2,,
-  4: 4,
-  true: 5,
-  false: 6
+		"one": 10 - 9,
+		two: 1 + 1,
+    "thr" + "ee": 6 / 2,
+    4: 4,
+    true: 5,
+    false: 6
   }`
 
 	evaluated := testEval(input)
 	result, ok := evaluated.(*object.Hash)
 	if !ok {
-		t.Fatalf("Eval didn't reuturn Hasah, got=%T (%+v)", evaluated, evaluated)
+		t.Fatalf("Eval didn't return Hash, got=%T (%+v)", evaluated, evaluated)
 	}
 
 	expected := map[object.HashKey]int64{

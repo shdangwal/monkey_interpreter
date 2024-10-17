@@ -51,7 +51,7 @@ var builtins = map[string]*object.Builtin{
 					len(args))
 			}
 			if args[0].Type() != object.ARRAY_OBJ {
-				return newError("arguments to `last` must be ARRAY got %s",
+				return newError("argument to `last` must be ARRAY, got %s",
 					args[0].Type())
 			}
 
